@@ -41,7 +41,12 @@ export async function startApiGateway(deps: GatewayDeps) {
       request.ip,
   });
 
-  await fastify.register(fastifyRedis, { url: config.redis.url });
+  // Redis pub/sub — non-fatal, only used by event bus
+  try {
+    await fastify.register(fastifyRedis, { url: config.redis.url });
+  } catch (err) {
+    console.warn("[API Gateway] Redis unavailable, running without pub/sub:", err);
+  }
 
   // Decorate request with wallet field for auth
   fastify.decorateRequest("wallet", "");

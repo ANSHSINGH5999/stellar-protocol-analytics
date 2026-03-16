@@ -21,9 +21,13 @@ async function main() {
   await prisma.$connect();
   console.log("[DB] Connected to PostgreSQL");
 
-  // Initialize event bus (Redis)
-  await initEventBus();
-  console.log("[EventBus] Redis connected");
+  // Initialize event bus (Redis) — non-fatal so app starts without Redis
+  try {
+    await initEventBus();
+    console.log("[EventBus] Redis connected");
+  } catch (err) {
+    console.warn("[EventBus] Redis unavailable, continuing without pub/sub:", err);
+  }
 
   // Initialize services
   const stakingEngine = new StakingEngine(prisma);
