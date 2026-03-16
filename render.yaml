@@ -12,38 +12,35 @@ services:
       - key: PORT
         value: 3001
       - key: STELLAR_NETWORK
-        value: mainnet
+        value: testnet
       - key: STELLAR_RPC_URL
-        value: https://mainnet.sorobanrpc.com
+        value: https://soroban-testnet.stellar.org
       - key: STELLAR_HORIZON_URL
-        value: https://horizon.stellar.org
+        value: https://horizon-testnet.stellar.org
       - key: STELLAR_NETWORK_PASSPHRASE
-        value: "Public Global Stellar Network ; September 2015"
+        value: "Test SDF Network ; September 2015"
       - key: SXLM_TOKEN_CONTRACT_ID
-        value: CCGFHMW3NZD5Z7ATHYHZSEG6ABCJADUHP5HIAWFPR37CP4VGNEDQO7FJ
+        value: CCSST2JJPO2XX7XKPIEZBVE3YVT3OKVZWVOOCUULQYM2YTXRQYS24DUA
       - key: STAKING_CONTRACT_ID
-        value: ""
+        value: CBTSQ6AVMK63LXF3BA7WREUGXX2QYYQXKIO7KPZXCEAEAKRVWJS7J7K3
       - key: LENDING_CONTRACT_ID
-        value: ""
+        value: CBY22XHGAIXFK5RROK4UAFC3BQH5D3ZKA3F2SWURHISB44EXXOYDAHYO
       - key: LP_POOL_CONTRACT_ID
-        value: ""
+        value: CDDYQEF74BJ2D4D4SC5ZVWWFTWRP7APFHSPOLPRT7QIU5H6SGYN6KBIA
       - key: GOVERNANCE_CONTRACT_ID
-        value: ""
+        value: CDGJP5AYMG2T5D3TZD5LGDO37SOF5LI3SPNOE2UBLLP7ZXANGB52CDS6
+      - key: NATIVE_TOKEN_CONTRACT_ID
+        value: CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
       - key: ADMIN_PUBLIC_KEY
-        value: GDWXTIIROGCVBSNQMBJFH6HOWQ4YSRVMKSUS53CH6MP56WSWD6J4VZ5N
+        value: GAUBEVSJBCR3LYNIK2JUQYWNEFLE43E73MBD3ZEXL6Q43EPHSERZXVNY
       - key: ADMIN_SECRET_KEY
         sync: false
       - key: JWT_SECRET
         sync: false
       - key: DATABASE_URL
-        fromDatabase:
-          name: sxlm-db
-          property: connectionString
+        value: postgresql://sxlm_db_m2cp_user:PdJASSnYy5vd45cb6LYnQJvRA1LwzwIK@dpg-d6s5ll7diees73c6m200-a:5432/sxlm_db_m2cp
       - key: REDIS_URL
-        fromService:
-          name: sxlm-redis
-          type: redis
-          property: connectionString
+        value: redis://red-d6s5n1fpm1nc73dv4do0:6379
 
   - type: redis
     name: sxlm-redis
