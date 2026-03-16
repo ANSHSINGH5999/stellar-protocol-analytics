@@ -1,0 +1,175 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Validator {
+  id               Int       @id @default(autoincrement())
+  pubkey           String    @unique
+  uptime           Float
+  commission       Float
+  votingPower      Float?
+  performanceScore Float
+  allocatedStake   BigInt
+  lastChecked      DateTime
+
+  history ValidatorHistory[]
+
+  @@map("validators")
+}
+
+model ValidatorHistory {
+  id               Int      @id @default(autoincrement())
+  validatorId      Int
+  uptime           Float
+  commission       Float
+  performanceScore Float
+  allocatedStake   BigInt
+  timestamp        DateTime @default(now())
+
+  validator Validator @relation(fields: [validatorId], references: [id])
+
+  @@index([validatorId, timestamp])
+  @@map("validator_history")
+}
+
+model RewardSnapshot {
+  id           Int      @id @default(autoincrement())
+  timestamp    DateTime @default(now())
+  totalStaked  BigInt
+  totalSupply  BigInt
+  exchangeRate Float
+  apy          Float
+
+  @@map("reward_snapshots")
+}
+
+model Withdrawal {
+  id         Int      @id @default(autoincrement())
+  wallet     String
+  amount     BigInt
+  status     String   @default("pending")
+  unlockTime DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([wallet])
+  @@index([status])
+  @@map("withdrawals")
+}
+
+model ProtocolMetrics {
+  id                Int      @id @default(autoincrement())
+  totalStaked       BigInt
+  totalSupply       BigInt
+  tvlUsd            Float
+  avgValidatorScore Float
+  protocolFees      BigInt   @default(0)
+  updatedAt         DateTime @default(now())
+
+  @@map("protocol_metrics")
+}
+
+model CollateralPosition {
+  id            Int      @id @default(autoincrement())
+  wallet        String
+  sxlmDeposited BigInt
+  xlmBorrowed   BigInt
+  healthFactor  Float
+  updatedAt     DateTime @default(now())
+
+  @@index([wallet])
+  @@map("collateral_positions")
+}
+
+model LPPosition {
+  id            Int      @id @default(autoincrement())
+  wallet        String
+  lpTokens      BigInt
+  xlmDeposited  BigInt
+  sxlmDeposited BigInt
+  updatedAt     DateTime @default(now())
+
+  @@index([wallet])
+  @@map("lp_positions")
+}
+
+model GovernanceProposal {
+  id           Int      @id @default(autoincrement())
+  proposer     String
+  paramKey     String
+  newValue     String
+  votesFor     BigInt   @default(0)
+  votesAgainst BigInt   @default(0)
+  status       String   @default("active")
+  createdAt    DateTime @default(now())
+  expiresAt    DateTime
+
+  @@map("governance_proposals")
+}
+
+model LiquidationEvent {
+  id               Int      @id @default(autoincrement())
+  liquidator       String
+  borrower         String
+  debtRepaid       BigInt
+  collateralSeized BigInt
+  ledger           Int
+  createdAt        DateTime @default(now())
+
+  @@index([borrower])
+  @@index([liquidator])
+  @@map("liquidation_events")
+}
+
+model ProtocolEvent {
+  id           BigInt   @id @default(autoincrement())
+  ledger       BigInt
+  timestamp    DateTime @default(now()) @db.Timestamptz
+  eventType    String   @map("event_type") @db.VarChar(50)
+  userAddress  String   @map("user_address") @db.VarChar(56)
+  contractId   String?  @map("contract_id") @db.VarChar(56)
+  asset        String?  @default("XLM") @db.VarChar(20)
+  amount       Decimal? @default(0) @db.Decimal(38, 7)
+  amountUsd    Decimal? @map("amount_usd") @default(0) @db.Decimal(38, 7)
+  revenueUsd   Decimal? @map("revenue_usd") @default(0) @db.Decimal(38, 7)
+  txHash       String   @unique @map("tx_hash") @db.VarChar(64)
+  rawData      Json?    @map("raw_data") @db.JsonB
+
+  @@index([timestamp(sort: Desc)], name: "idx_events_timestamp")
+  @@index([eventType], name: "idx_events_type")
+  @@index([userAddress], name: "idx_events_user")
+  @@index([ledger], name: "idx_events_ledger")
+  @@index([eventType, timestamp(sort: Desc)], name: "idx_events_type_ts")
+  @@map("protocol_events")
+}
+
+model LedgerCursor {
+  contractId  String   @id @map("contract_id") @db.VarChar(56)
+  lastLedger  BigInt   @map("last_ledger") @default(0)
+  pagingToken String?  @map("paging_token") @db.VarChar(128)
+  updatedAt   DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@map("ledger_cursors")
+}
+
+model DailySummary {
+  date             DateTime @id @db.Date
+  totalStaked      Decimal? @map("total_staked") @default(0) @db.Decimal(38, 7)
+  totalBorrowed    Decimal? @map("total_borrowed") @default(0) @db.Decimal(38, 7)
+  totalRevenue     Decimal? @map("total_revenue") @default(0) @db.Decimal(38, 7)
+  tvlUsd           Decimal? @map("tvl_usd") @default(0) @db.Decimal(38, 7)
+  activeUsers      Int?     @map("active_users") @default(0)
+  stakeCount       Int?     @map("stake_count") @default(0)
+  borrowCount      Int?     @map("borrow_count") @default(0)
+  liquidationCount Int?     @map("liquidation_count") @default(0)
+  flashLoanCount   Int?     @map("flash_loan_count") @default(0)
+  updatedAt        DateTime @default(now()) @map("updated_at") @db.Timestamptz
+
+  @@index([date(sort: Desc)], name: "idx_daily_date")
+  @@map("daily_summaries")
+}
+

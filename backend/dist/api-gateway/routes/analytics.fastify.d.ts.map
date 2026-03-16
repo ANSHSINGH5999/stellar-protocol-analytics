@@ -1,0 +1,1 @@
+{"version":3,"file":"analytics.fastify.d.ts","sourceRoot":"","sources":["../../../src/api-gateway/routes/analytics.fastify.ts"],"names":[],"mappings":"AAAA,OAAO,EAAE,eAAe,EAAE,MAAM,SAAS,CAAC;AAC1C,OAAO,EAAE,YAAY,EAAE,MAAM,gBAAgB,CAAC;AAE9C,wBAAsB,eAAe,CACnC,OAAO,EAAE,eAAe,EACxB,IAAI,EAAE;IAAE,MAAM,EAAE,YAAY,CAAA;CAAE,iBA6Q/B"}

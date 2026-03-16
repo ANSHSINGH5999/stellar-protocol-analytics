@@ -1,0 +1,65 @@
+export interface DepositResult {
+    txHash: string;
+    sxlmMinted: bigint;
+    exchangeRate: number;
+}
+export interface WithdrawalRequestResult {
+    txHash: string;
+    withdrawalId: number;
+    unlockTime: Date;
+    isInstant: boolean;
+    xlmAmount: bigint;
+}
+export interface ClaimResult {
+    txHash: string;
+    xlmReturned: bigint;
+}
+export declare function callDeposit(userPublicKey: string, xlmAmount: bigint): Promise<DepositResult>;
+export declare function callRequestWithdrawal(userPublicKey: string, sxlmAmount: bigint): Promise<WithdrawalRequestResult>;
+export declare function callClaimWithdrawal(userPublicKey: string, withdrawalId: number): Promise<ClaimResult>;
+export interface SimDepositResult {
+    sxlmMinted: bigint;
+    exchangeRate: number;
+}
+export declare function simulateDeposit(userPublicKey: string, xlmAmount: bigint): Promise<SimDepositResult>;
+export interface SimWithdrawalResult {
+    sxlmAmount: bigint;
+    xlmAmount: bigint;
+    exchangeRate: number;
+    isInstant: boolean;
+    unlockTime: Date;
+}
+export declare function simulateRequestWithdrawal(userPublicKey: string, sxlmAmount: bigint): Promise<SimWithdrawalResult>;
+export declare function getExchangeRate(): Promise<number>;
+export declare function getTotalStaked(): Promise<bigint>;
+export declare function getTotalSupply(): Promise<bigint>;
+export declare function getLiquidityBuffer(): Promise<bigint>;
+export declare function getTreasuryBalance(): Promise<bigint>;
+export declare function getIsPaused(): Promise<boolean>;
+export declare function getProtocolFeeBps(): Promise<number>;
+export declare function callWithdrawFees(amount: bigint): Promise<string>;
+export declare function callAddRewards(amount: bigint): Promise<string>;
+export declare function callRecalibrateRate(): Promise<string>;
+export declare function callApplySlashing(slashAmount: bigint): Promise<string>;
+export declare function callPause(): Promise<string>;
+export declare function callUnpause(): Promise<string>;
+/**
+ * Governance parameter helpers — apply on-chain after proposal execution.
+ */
+export declare function callSetCooldownPeriod(period: number): Promise<string>;
+export declare function callCollectProtocolFees(): Promise<string>;
+export declare function callSetLpProtocolFeeBps(bps: number): Promise<string>;
+export declare function getLpAccruedProtocolFees(): Promise<bigint>;
+export declare function callUpdateCollateralFactor(bps: number): Promise<string>;
+export declare function callUpdateBorrowRate(bps: number): Promise<string>;
+export declare function callUpdateLiquidationThreshold(bps: number): Promise<string>;
+/**
+ * Sync the staking exchange rate to the lending contract.
+ * The lending contract stores its own ExchangeRate (sXLM→XLM, scaled by 1e7).
+ * Call this after every reward distribution or snapshot to keep health factors current.
+ *
+ * rate: exchange rate from computeExchangeRate() (e.g. 1.0042)
+ * The lending contract expects RATE_PRECISION = 1e7 scaling, so 1.0042 → 10_042_000
+ */
+export declare function callUpdateLendingExchangeRate(rate: number): Promise<void>;
+//# sourceMappingURL=contractClient.d.ts.map

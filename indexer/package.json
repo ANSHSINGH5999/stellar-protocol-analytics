@@ -1,0 +1,18 @@
+{
+  "name": "sxlm-protocol-indexer",
+  "version": "1.0.0",
+  "description": "Hubble-style indexer for sXLM Protocol — indexes real Stellar/Soroban events",
+  "type": "commonjs",
+  "main": "indexer.js",
+  "scripts": {
+    "start": "node indexer.js",
+    "dev": "node --watch indexer.js",
+    "setup-db": "psql $DATABASE_URL -f schema.sql"
+  },
+  "dependencies": {
+    "@stellar/stellar-sdk": "^13.1.0",
+    "dotenv": "^16.4.7",
+    "node-fetch": "^2.7.0",
+    "pg": "^8.13.3"
+  }
+}

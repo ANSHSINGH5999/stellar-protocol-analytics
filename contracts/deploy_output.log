@@ -1,0 +1,327 @@
+=== sXLM Protocol — Contract Deployment ===
+Network: testnet
+Account: protocol-wallet
+
+[1/10] Building contracts...
+ℹ️  CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/ansh/.cargo/registry/src= cargo rustc --manifest-path=sxlm-token/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+    Updating crates.io index
+ Downloading crates ...
+  Downloaded ctor v0.2.9
+  Downloaded keccak v0.1.6
+  Downloaded deranged v0.5.6
+  Downloaded addr2line v0.25.1
+  Downloaded rustc-demangle v0.1.27
+  Downloaded zmij v1.0.21
+  Downloaded unicode-ident v1.0.23
+  Downloaded backtrace v0.3.76
+  Downloaded gimli v0.32.3
+  Downloaded syn v2.0.115
+  Downloaded soroban-spec-rust v21.7.7
+  Downloaded soroban-ledger-snapshot v21.7.7
+  Downloaded soroban-env-macros v21.2.1
+  Downloaded soroban-builtin-sdk-macros v21.2.1
+  Downloaded soroban-token-sdk v21.7.7
+  Downloaded soroban-spec v21.7.7
+  Downloaded soroban-env-guest v21.2.1
+  Downloaded soroban-sdk-macros v21.7.7
+  Downloaded object v0.37.3
+  Downloaded soroban-env-common v21.2.1
+  Downloaded soroban-sdk v21.7.7
+  Downloaded soroban-env-host v21.2.1
+  Downloaded stellar-xdr v21.2.0
+  Downloaded libc v0.2.182
+   Compiling proc-macro2 v1.0.106
+   Compiling quote v1.0.44
+   Compiling unicode-ident v1.0.23
+   Compiling serde_core v1.0.228
+   Compiling zmij v1.0.21
+   Compiling serde v1.0.228
+   Compiling serde_json v1.0.149
+   Compiling memchr v2.8.0
+   Compiling itoa v1.0.17
+   Compiling ident_case v1.0.1
+   Compiling strsim v0.11.1
+   Compiling fnv v1.0.7
+   Compiling autocfg v1.5.0
+   Compiling thiserror v1.0.69
+   Compiling base32 v0.4.0
+   Compiling typenum v1.19.0
+   Compiling semver v1.0.27
+   Compiling version_check v0.9.5
+   Compiling generic-array v0.14.9
+   Compiling escape-bytes v0.1.1
+   Compiling num-traits v0.2.19
+   Compiling libc v0.2.182
+   Compiling either v1.15.0
+   Compiling itertools v0.11.0
+   Compiling syn v2.0.115
+   Compiling rustc_version v0.4.1
+   Compiling hashbrown v0.16.1
+   Compiling equivalent v1.0.2
+   Compiling indexmap v2.13.0
+   Compiling prettyplease v0.2.37
+   Compiling wasmparser v0.116.1
+   Compiling darling_core v0.21.3
+   Compiling serde_derive v1.0.228
+   Compiling thiserror-impl v1.0.69
+   Compiling darling_macro v0.21.3
+   Compiling darling v0.21.3
+   Compiling block-buffer v0.10.4
+   Compiling crypto-common v0.1.6
+   Compiling num-derive v0.4.2
+   Compiling digest v0.10.7
+   Compiling cpufeatures v0.2.17
+   Compiling darling_core v0.20.11
+   Compiling base64 v0.13.1
+   Compiling cfg-if v1.0.4
+   Compiling sha2 v0.10.9
+   Compiling num-integer v0.1.46
+   Compiling ethnum v1.5.2
+   Compiling static_assertions v1.1.0
+   Compiling num-bigint v0.4.6
+   Compiling soroban-sdk v21.7.7
+   Compiling darling_macro v0.20.11
+   Compiling darling v0.20.11
+   Compiling bytes-lit v0.0.5
+   Compiling serde_with_macros v3.16.1
+   Compiling serde_with v3.16.1
+   Compiling crate-git-revision v0.0.6
+   Compiling hex v0.4.3
+   Compiling stellar-strkey v0.0.8
+   Compiling stellar-xdr v21.2.0
+   Compiling soroban-env-common v21.2.1
+   Compiling soroban-sdk-macros v21.7.7
+   Compiling soroban-spec v21.7.7
+   Compiling soroban-spec-rust v21.7.7
+   Compiling soroban-env-macros v21.2.1
+   Compiling soroban-env-guest v21.2.1
+   Compiling soroban-token-sdk v21.7.7
+   Compiling sxlm-token v0.1.0 (/Users/ansh/Downloads/stello_finance-main 2/contracts/sxlm-token)
+    Finished `release` profile [optimized] target(s) in 50.80s
+ℹ️  Build Summary:
+    Wasm File: target/wasm32v1-none/release/sxlm_token.wasm (8537 bytes)
+    Wasm Hash: ccf4aab9fa5e0e67bc59ba0a1c2eb92ad73bb10d273335707e47207183fb6768
+    Wasm Size: 8537 bytes
+    Exported Functions: 20 found
+      • _
+      • admin
+      • allowance
+      • approve
+      • balance
+      • bump_balance
+      • bump_instance
+      • burn
+      • decimals
+      • initialize
+      • mint
+      • minter
+      • name
+      • set_admin
+      • set_minter
+      • symbol
+      • total_supply
+      • transfer
+      • transfer_from
+      • upgrade
+✅ Build Complete
+
+ℹ️  CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/ansh/.cargo/registry/src= cargo rustc --manifest-path=staking/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling sxlm-staking v0.1.0 (/Users/ansh/Downloads/stello_finance-main 2/contracts/staking)
+    Finished `release` profile [optimized] target(s) in 0.39s
+ℹ️  Build Summary:
+    Wasm File: target/wasm32v1-none/release/sxlm_staking.wasm (16504 bytes)
+    Wasm Hash: c8339f0acb5481d4d1672b322a9608479f0d4fa6eee57af1495a6bc48a5cc135
+    Wasm Size: 16504 bytes
+    Exported Functions: 29 found
+      • _
+      • add_liquidity
+      • add_rewards
+      • admin
+      • apply_slashing
+      • bump_instance
+      • claim_withdrawal
+      • deposit
+      • get_cooldown_period
+      • get_exchange_rate
+      • get_validators
+      • get_withdrawal
+      • initialize
+      • is_paused
+      • liquidity_buffer
+      • pause
+      • protocol_fee_bps
+      • recalibrate_rate
+      • request_withdrawal
+      • set_admin
+      • set_cooldown_period
+      • set_treasury
+      • total_sxlm_supply
+      • total_xlm_staked
+      • treasury_balance
+      • unpause
+      • update_validators
+      • upgrade
+      • withdraw_fees
+✅ Build Complete
+
+ℹ️  CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/ansh/.cargo/registry/src= cargo rustc --manifest-path=lending/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling sxlm-lending v0.1.0 (/Users/ansh/Downloads/stello_finance-main 2/contracts/lending)
+    Finished `release` profile [optimized] target(s) in 0.28s
+ℹ️  Build Summary:
+    Wasm File: target/wasm32v1-none/release/sxlm_lending.wasm (13963 bytes)
+    Wasm Hash: dbded83f0829d681eaa4b3ebeee6509e647a7e4c4b7182cae7bacd8d12a50c4a
+    Wasm Size: 13963 bytes
+    Exported Functions: 23 found
+      • _
+      • borrow
+      • bump_instance
+      • deposit_collateral
+      • get_borrow_rate
+      • get_collateral_factor
+      • get_exchange_rate
+      • get_liquidation_bonus
+      • get_liquidation_threshold
+      • get_pool_balance
+      • get_position
+      • health_factor
+      • initialize
+      • liquidate
+      • repay
+      • total_borrowed
+      • total_collateral
+      • update_borrow_rate
+      • update_collateral_factor
+      • update_exchange_rate
+      • update_liquidation_threshold
+      • upgrade
+      • withdraw_collateral
+✅ Build Complete
+
+ℹ️  CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/ansh/.cargo/registry/src= cargo rustc --manifest-path=lp-pool/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling sxlm-lp-pool v0.1.0 (/Users/ansh/Downloads/stello_finance-main 2/contracts/lp-pool)
+    Finished `release` profile [optimized] target(s) in 0.27s
+ℹ️  Build Summary:
+    Wasm File: target/wasm32v1-none/release/sxlm_lp_pool.wasm (13691 bytes)
+    Wasm Hash: 83f6a6b046b0eb5ab3385cf6b44f2f5b875fc498aa28b995941adc38d834b91c
+    Wasm Size: 13691 bytes
+    Exported Functions: 16 found
+      • _
+      • accrued_protocol_fees
+      • add_liquidity
+      • bump_instance
+      • collect_protocol_fees
+      • get_lp_balance
+      • get_price
+      • get_reserves
+      • initialize
+      • protocol_fee_bps
+      • remove_liquidity
+      • set_protocol_fee_bps
+      • swap_sxlm_to_xlm
+      • swap_xlm_to_sxlm
+      • total_lp_supply
+      • upgrade
+✅ Build Complete
+
+ℹ️  CARGO_BUILD_RUSTFLAGS=--remap-path-prefix=/Users/ansh/.cargo/registry/src= cargo rustc --manifest-path=governance/Cargo.toml --crate-type=cdylib --target=wasm32v1-none --release
+   Compiling sxlm-governance v0.1.0 (/Users/ansh/Downloads/stello_finance-main 2/contracts/governance)
+    Finished `release` profile [optimized] target(s) in 0.31s
+ℹ️  Build Summary:
+    Wasm File: target/wasm32v1-none/release/sxlm_governance.wasm (11264 bytes)
+    Wasm Hash: e49d4a46fd44d4830d846e5d6d50a0edc70f12fc27a344e505cbbb53d7b7e936
+    Wasm Size: 11264 bytes
+    Exported Functions: 12 found
+      • _
+      • bump_instance
+      • create_proposal
+      • execute_proposal
+      • get_param
+      • get_proposal
+      • get_vote_count
+      • initialize
+      • proposal_count
+      • set_reference_supply
+      • upgrade
+      • vote
+✅ Build Complete
+
+  Found: /Users/ansh/Downloads/stello_finance-main 2/contracts/target/wasm32v1-none/release/sxlm_token.wasm
+  Found: /Users/ansh/Downloads/stello_finance-main 2/contracts/target/wasm32v1-none/release/sxlm_staking.wasm
+  Found: /Users/ansh/Downloads/stello_finance-main 2/contracts/target/wasm32v1-none/release/sxlm_lending.wasm
+  Found: /Users/ansh/Downloads/stello_finance-main 2/contracts/target/wasm32v1-none/release/sxlm_lp_pool.wasm
+  Found: /Users/ansh/Downloads/stello_finance-main 2/contracts/target/wasm32v1-none/release/sxlm_governance.wasm
+
+[2/10] Deploying sXLM Token contract...
+  Token Contract ID: ℹ️  Skipping install because wasm already installed
+ℹ️  Using wasm hash ccf4aab9fa5e0e67bc59ba0a1c2eb92ad73bb10d273335707e47207183fb6768
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is 1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+🔗 https://stellar.expert/explorer/testnet/tx/1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+ℹ️  Signing transaction: 1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CDFFCLOW7LP3AAGS2XNYMDP2O7TJ5NDHBXKTVXMMDMLKENJS3VCGVKFR
+✅ Deployed!
+CDFFCLOW7LP3AAGS2XNYMDP2O7TJ5NDHBXKTVXMMDMLKENJS3VCGVKFR
+[3/10] Deploying Staking contract...
+  Staking Contract ID: ℹ️  Simulating install transaction…
+ℹ️  Signing transaction: 22093a95b9fcaa30842ab2426c192d0841868cbb89be2d07d0fe562dbe12afde
+🌎 Submitting install transaction…
+ℹ️  Using wasm hash c8339f0acb5481d4d1672b322a9608479f0d4fa6eee57af1495a6bc48a5cc135
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is 798fbd6503815b1bf1323f79bee09dcc40d23870c105629d6d5f0c10b2a36953
+🔗 https://stellar.expert/explorer/testnet/tx/798fbd6503815b1bf1323f79bee09dcc40d23870c105629d6d5f0c10b2a36953
+ℹ️  Signing transaction: 798fbd6503815b1bf1323f79bee09dcc40d23870c105629d6d5f0c10b2a36953
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CCAKDCCS3VFEZYIUDUVMEV64NWMML3OHFXCDOFHZFLEIQAM6BKO5CNJ2
+✅ Deployed!
+CCAKDCCS3VFEZYIUDUVMEV64NWMML3OHFXCDOFHZFLEIQAM6BKO5CNJ2
+[4/10] Deploying Lending contract...
+  Lending Contract ID: ℹ️  Skipping install because wasm already installed
+ℹ️  Using wasm hash dbded83f0829d681eaa4b3ebeee6509e647a7e4c4b7182cae7bacd8d12a50c4a
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is 7b7ec159bedbf67569bd260acaa6bf64b89fcfd53bebb69bbcb62b5c4cdbee02
+🔗 https://stellar.expert/explorer/testnet/tx/7b7ec159bedbf67569bd260acaa6bf64b89fcfd53bebb69bbcb62b5c4cdbee02
+ℹ️  Signing transaction: 7b7ec159bedbf67569bd260acaa6bf64b89fcfd53bebb69bbcb62b5c4cdbee02
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CDQOFVTZ7FDRJHTNEWNPJ275UPZD5B453WPKKHVZIK6LBF5KX5FXLROH
+✅ Deployed!
+CDQOFVTZ7FDRJHTNEWNPJ275UPZD5B453WPKKHVZIK6LBF5KX5FXLROH
+[5/10] Deploying LP Pool contract...
+  LP Pool Contract ID: ℹ️  Simulating install transaction…
+ℹ️  Signing transaction: 4ab39fd5da6c44a2d323ca124b0f50273c5d5e146692540e6db4ab86706a155d
+🌎 Submitting install transaction…
+ℹ️  Using wasm hash 83f6a6b046b0eb5ab3385cf6b44f2f5b875fc498aa28b995941adc38d834b91c
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is eacc8713652f8973e4b8cb83652d1958c52cb61dc0c239149b09cb971cb79bca
+🔗 https://stellar.expert/explorer/testnet/tx/eacc8713652f8973e4b8cb83652d1958c52cb61dc0c239149b09cb971cb79bca
+ℹ️  Signing transaction: eacc8713652f8973e4b8cb83652d1958c52cb61dc0c239149b09cb971cb79bca
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CBH2JXVLEVDSYURITJJGNLAH4SVL55JJL7GMWQWC2N7YO4BZ7IALAVXV
+✅ Deployed!
+CBH2JXVLEVDSYURITJJGNLAH4SVL55JJL7GMWQWC2N7YO4BZ7IALAVXV
+[6/10] Deploying Governance contract...
+  Governance Contract ID: ℹ️  Skipping install because wasm already installed
+ℹ️  Using wasm hash e49d4a46fd44d4830d846e5d6d50a0edc70f12fc27a344e505cbbb53d7b7e936
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is 6a619d6b9a22f072295f7e82eb62ead5fc87649d4bebd65daf030850c92f3d59
+🔗 https://stellar.expert/explorer/testnet/tx/6a619d6b9a22f072295f7e82eb62ead5fc87649d4bebd65daf030850c92f3d59
+ℹ️  Signing transaction: 6a619d6b9a22f072295f7e82eb62ead5fc87649d4bebd65daf030850c92f3d59
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CCU72BCICRNMTZWSVUYCRFADSRPY2TWXCKMNHPZFAR65IEPHZWZE44LT
+✅ Deployed!
+CCU72BCICRNMTZWSVUYCRFADSRPY2TWXCKMNHPZFAR65IEPHZWZE44LT
+[7/10] Resolving native XLM token (SAC) address...
+  Native XLM Token ID: CDLZFC3SYJYDZT7K67VZ75HPJVIEUVNIXF47ZG2FB2RMQQVU2HHGCYSC
+  Admin public key: GDRXIXINISI6RI5WMLMEGB65XEZAH22DPYA4PKGWKK64H3LZ5F53G5VP
+
+[8/10] Initializing sXLM Token contract...
+❌ error: contract not found: ℹ️  Skipping install because wasm already installed
+ℹ️  Using wasm hash ccf4aab9fa5e0e67bc59ba0a1c2eb92ad73bb10d273335707e47207183fb6768
+ℹ️  Simulating deploy transaction…
+ℹ️  Transaction hash is 1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+🔗 https://stellar.expert/explorer/testnet/tx/1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+ℹ️  Signing transaction: 1369a774118aaa1c134d21c77abab0eba448d1cc3cd3c09ea5942f2abd721229
+🌎 Submitting deploy transaction…
+🔗 https://lab.stellar.org/r/testnet/contract/CDFFCLOW7LP3AAGS2XNYMDP2O7TJ5NDHBXKTVXMMDMLKENJS3VCGVKFR
+✅ Deployed!
+CDFFCLOW7LP3AAGS2XNYMDP2O7TJ5NDHBXKTVXMMDMLKENJS3VCGVKFR
