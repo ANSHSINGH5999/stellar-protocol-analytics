@@ -9,9 +9,10 @@ import {
   ResponsiveContainer, Legend,
 } from 'recharts'
 
-// ─── API endpoints via vite proxy ───────────────────────────────────────────
-const ANALYTICS  = '/api/analytics'  // → http://localhost:3002
-const BACKEND    = '/api'             // → http://localhost:3001
+// ─── API endpoints (reads VITE_API_URL or falls back to relative path for local proxy) ───
+const BASE       = import.meta.env.VITE_API_URL ?? ''
+const ANALYTICS  = `${BASE}/api/analytics`
+const BACKEND    = `${BASE}/api`
 
 // ─── Shared types ────────────────────────────────────────────────────────────
 interface TvlPoint      { date: string; tvl_usd: number; exchange_rate: number }

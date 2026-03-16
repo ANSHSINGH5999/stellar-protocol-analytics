@@ -3,10 +3,12 @@ node_modules/
 .pnp/
 .pnp.js
 
-# Environment Variables (NEVER commit these)
+# Environment Variables (NEVER commit secrets)
 .env
-.env.*
+.env.local
+.env.*.local
 !.env.example
+!.env.production
 
 # Build output
 dist/
