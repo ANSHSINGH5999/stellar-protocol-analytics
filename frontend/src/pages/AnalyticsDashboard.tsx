@@ -6,10 +6,15 @@ import "chart.js/auto";
 const API_BASE = "/api/analytics";
 
 export default function AnalyticsDashboard() {
-  const [tvlHistory, setTvlHistory] = useState([]);
-  const [utilizationCurves, setUtilizationCurves] = useState([]);
-  const [revenueBreakdown, setRevenueBreakdown] = useState([]);
-  const [cohorts, setCohorts] = useState([]);
+  type TvlHistory = { date: string; value: number };
+  type UtilizationCurve = { date: string; value: number };
+  type RevenueBreakdown = { category: string; amount: number };
+  type Cohort = { name: string; retention: number; avgPositionSize: number };
+
+  const [tvlHistory, setTvlHistory] = useState<TvlHistory[]>([]);
+  const [utilizationCurves, setUtilizationCurves] = useState<UtilizationCurve[]>([]);
+  const [revenueBreakdown, setRevenueBreakdown] = useState<RevenueBreakdown[]>([]);
+  const [cohorts, setCohorts] = useState<Cohort[]>([]);
 
   useEffect(() => {
     axios.get(`${API_BASE}/tvl-history`).then(res => setTvlHistory(res.data.tvlHistory));
