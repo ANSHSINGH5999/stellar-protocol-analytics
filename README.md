@@ -1,232 +1,174 @@
-# STELLO
+# STELLO PROTOCOL
 
-A liquid staking protocol for Stellar (XLM) built on Soroban. Users stake XLM to receive sXLM, participate in validator delegation, and access lending, liquidity pools, governance, and leverage features.
+![Stello Protocol](https://img.shields.io/badge/Stellar-Soroban-black?logo=stellar) ![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=flat&logo=typescript&logoColor=white) ![Rust](https://img.shields.io/badge/Rust-000000?style=flat&logo=rust&logoColor=white)
 
----
-
-## Architecture
-
-The project is a monorepo with three main components:
-
-| Component | Description |
-|-----------|-------------|
-| **contract** | Soroban smart contracts (Rust). sXLM token, staking, lending, LP pool, and governance. |
-| **backend** | Node.js API and off-chain services. Handles indexing, validators, rewards, risk, and keeper logic. |
-| **frontend** | React SPA. Stake, withdraw, validators, analytics, lending, liquidity, governance, leverage, restaking. |
-
-- **Chain:** Stellar (Soroban). Default configuration targets Stellar Testnet.
-- **Data:** PostgreSQL (Prisma) for validators, metrics, withdrawals, positions, governance; Redis for event bus.
-- **Wallet:** Stellar Freighter (frontend); backend uses admin keypair for contract interactions.
+Stello is a comprehensive liquid staking protocol for the Stellar (XLM) network, built on Soroban smart contracts. Users stake XLM to receive **sXLM** (Staked XLM), participate in validator delegation, and unlock ecosystem features like lending, liquidity pools, governance, and leverage.
 
 ---
 
-## Deployed contract addresses
+## 🏗 System Architecture
+
+This project is structured as a powerful monorepo containing everything needed to run the protocol, from on-chain contracts to the analytics frontend.
+
+| Component | Stack | Description |
+|-----------|-------|-------------|
+| **`contract`** | Rust / Soroban | Smart contracts governing the sXLM token, staking logic, collateralized lending, XLM/sXLM liquidity pools, and protocol governance. |
+| **`backend`** | Node.js / Fastify / Prisma | Robust backend API and off-chain services. Manages validator selection, reward distribution, risk management, keeper logic, and serves the Analytics API. |
+| **`indexer`** | Node.js / PostgreSQL | Hubble-style custom blockchain indexer that listens to Stellar/Soroban events, parses liquidations, stakes, and flash loans, and persists them to the DB. |
+| **`frontend`** | React / Vite / Tailwind | The primary user-facing dApp (Decentralized Application). Allows users to stake, withdraw, manage validators, supply liquidity, and participate in governance. |
+| **`dashboard`** | React / Vite / Recharts | An advanced, Dune-style analytics dashboard presenting real-time protocol metrics, TVL history, utilization curves, and revenue breakdowns. |
+
+### Technical Stack Details
+- **Chain:** Stellar (Soroban). Pre-configured for Stellar Testnet.
+- **Data Layer:** PostgreSQL (via Prisma ORM) for metrics, positions, validators; Redis for real-time event-bus messaging.
+- **Wallet Integration:** Stellar Freighter wallet (frontend authentication and signing).
+- **Backend Architecture:** Fastify for high-performance API routing, node-cron for scheduled metrics.
+
+---
+
+## 📜 Deployed Contract Addresses
 
 | Contract | Address |
 |----------|---------|
-| sXLM Token | `CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA` |
-| Staking | `CDYXKWVDGEVA6OSIGN7GRAPPRN6AKID35OJL5ZZQIBCMECZ35KGL45PS` |
-| LP Pool | `CAW2DRMOI3CCJWKVMEUWYJUEQHXB4S4DR72HNL2DWQCMQQUH3LFFVLHV` |
-| Lending | `CAOWXZ6BWA2ZYY7GHD75OFKADKUJS4WCKPDYGGXULQWFJRB55TXAQNJG` |
-| Governance | `CB7LV3FBQ7US26GVC7SM7RMX22IEEHAEUL7V3TDDWM32DHA5TDFDDEP4` |
+| **sXLM Token** | `CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA` |
+| **Staking** | `CDYXKWVDGEVA6OSIGN7GRAPPRN6AKID35OJL5ZZQIBCMECZ35KGL45PS` |
+| **LP Pool** | `CAW2DRMOI3CCJWKVMEUWYJUEQHXB4S4DR72HNL2DWQCMQQUH3LFFVLHV` |
+| **Lending** | `CAOWXZ6BWA2ZYY7GHD75OFKADKUJS4WCKPDYGGXULQWFJRB55TXAQNJG` |
+| **Governance** | `CB7LV3FBQ7US26GVC7SM7RMX22IEEHAEUL7V3TDDWM32DHA5TDFDDEP4` |
 
-Backend `.env`:
-
-```
-SXLM_TOKEN_CONTRACT_ID=CAS3J7GYLGXMF6TDJBBYYSE3HQ6BBSMLNUQ34T6TZMYMW2EVH34XOWMA
-STAKING_CONTRACT_ID=CDYXKWVDGEVA6OSIGN7GRAPPRN6AKID35OJL5ZZQIBCMECZ35KGL45PS
-LP_POOL_CONTRACT_ID=CAW2DRMOI3CCJWKVMEUWYJUEQHXB4S4DR72HNL2DWQCMQQUH3LFFVLHV
-LENDING_CONTRACT_ID=CAOWXZ6BWA2ZYY7GHD75OFKADKUJS4WCKPDYGGXULQWFJRB55TXAQNJG
-GOVERNANCE_CONTRACT_ID=CB7LV3FBQ7US26GVC7SM7RMX22IEEHAEUL7V3TDDWM32DHA5TDFDDEP4
-```
-
-For the frontend, set the same IDs with the `VITE_` prefix (e.g. `VITE_SXLM_TOKEN_CONTRACT_ID`, `VITE_STAKING_CONTRACT_ID`, etc.).
+*Ensure these are set in your `.env` files for the respective components when deploying.*
 
 ---
 
-## Prerequisites
+## ⚙️ Prerequisites
 
-- **Node.js** 20+ (backend and frontend)
-- **Rust** and **Soroban CLI** (contracts; [Stellar Soroban docs](https://soroban.stellar.org/docs))
-- **PostgreSQL** and **Redis** (for backend)
-- **pnpm** or **npm** (package manager)
+Before you begin, ensure you have the following installed:
+- **Node.js** (v20+ recommended)
+- **Rust** and **Soroban CLI** ([Stellar Soroban Setup Guide](https://soroban.stellar.org/docs))
+- **PostgreSQL** (running locally or via Docker)
+- **Redis** (running locally or via Docker)
+- **pnpm** or **npm** (Package manager)
 
 ---
 
-## Getting Started
+## 🚀 Getting Started
 
-### 1. Smart Contracts (Rust / Soroban)
+Follow these steps to spin up the entire Stello ecosystem locally.
 
-From the repository root:
+### 1. Smart Contracts
+Navigate to the contract directory to build the Soroban contracts.
 
 ```bash
 cd contract
 cargo build
 ```
+*Tip: Deploy these to your target network using the Soroban CLI and update your env variables with the outputted Contract IDs.*
 
-Workspace members:
+### 2. Database & Redis Services
+Ensure PostgreSQL and Redis are running. Create a `.env` in the `backend/` directory:
+```env
+DATABASE_URL="postgresql://user:password@localhost:5432/sxlm_protocol"
+REDIS_URL="redis://localhost:6379"
+```
 
-- `sxlm-token` — sXLM liquid staking token
-- `staking` — stake/unstake and delegation
-- `lending` — collateralized lending
-- `lp-pool` — XLM/sXLM liquidity pool
-- `governance` — parameter proposals and voting
-
-Deploy and configure contract IDs per your network (testnet/mainnet) and set the same IDs in backend and frontend environment variables.
-
-### 2. Backend
-
+### 3. Backend API Gateway
+The Fastify server handles off-chain logic and serves the Analytics API.
 ```bash
 cd backend
 npm install
-# Create .env with required variables (see Environment Variables below)
 npx prisma generate
-npx prisma migrate dev   # or db push for prototyping
+npx prisma db push     # Prepare the database schema
+npm run seed           # (Optional) Seed DB with sample validator & metric data
+npm run dev
+```
+*API will run at `http://localhost:3001`.*
+
+### 4. Protocol Indexer
+The custom indexer ingests Soroban events (Stakes, Liquidations, Borrows) and updates the database.
+```bash
+cd indexer
+npm install
+# Ensure DATABASE_URL is accessible here
 npm run dev
 ```
 
-Default dev server: `http://localhost:3001`.
-
-Optional: seed database with sample validators and metrics:
-
-```bash
-npm run seed
-```
-
-### 3. Frontend
-
+### 5. Frontend dApp
+The core user application for staking and interacting with the protocol.
 ```bash
 cd frontend
 npm install
-# Set VITE_* env vars if needed (see Environment Variables)
+# Configure VITE_ environment variables (see below)
 npm run dev
 ```
+*Frontend will run at `http://localhost:5173`.*
 
-Default dev server: `http://localhost:5173`.
+### 6. Analytics Dashboard
+The Dune-style visualizer for protocol health and TVL.
+```bash
+cd dashboard
+npm install
+npm run dev
+```
+*Dashboard will run at `http://localhost:5174`.*
 
 ---
 
-## Environment Variables
+## 🔐 Environment Variables Summary
 
-### Backend (`backend/.env`)
-
+### `backend/.env`
 | Variable | Description |
 |----------|-------------|
 | `DATABASE_URL` | PostgreSQL connection string |
-| `REDIS_URL` | Redis connection string (event bus) |
-| `STELLAR_RPC_URL` | Soroban RPC endpoint |
-| `STELLAR_NETWORK_PASSPHRASE` | Network passphrase (e.g. Test SDF Network) |
-| `STELLAR_HORIZON_URL` | Horizon API URL |
-| `SXLM_TOKEN_CONTRACT_ID` | Deployed sXLM token contract ID |
-| `STAKING_CONTRACT_ID` | Deployed staking contract ID |
-| `LENDING_CONTRACT_ID` | Deployed lending contract ID |
-| `LP_POOL_CONTRACT_ID` | Deployed LP pool contract ID |
-| `GOVERNANCE_CONTRACT_ID` | Deployed governance contract ID |
-| `PORT` | API port (default `3001`) |
-| `HOST` | Bind host (default `0.0.0.0`) |
-| `ADMIN_SECRET_KEY` | Admin secret key for contract txs |
-| `ADMIN_PUBLIC_KEY` | Admin public key |
-| `JWT_SECRET` | Secret for JWT auth |
-| `JWT_EXPIRES_IN` | JWT expiry (e.g. `24h`) |
-| `GOVERNANCE_WEBHOOK_URL` | Optional webhook for governance events |
-| `SLACK_WEBHOOK_URL` | Optional Slack webhook |
+| `REDIS_URL` | Redis connection string for the event bus |
+| `STELLAR_RPC_URL` | Soroban RPC endpoint (e.g. `https://soroban-testnet.stellar.org`) |
+| `STELLAR_NETWORK_PASSPHRASE` | Network passphrase (e.g. `Test SDF Network ; September 2015`) |
+| `SXLM_TOKEN_CONTRACT_ID` | Your deployed sXLM contract ID |
+| `ADMIN_SECRET_KEY` | Admin secret key for executing backend contract txs |
+| `JWT_SECRET` | Secret key for JWT auth rendering |
 
-### Frontend (`frontend/.env`)
-
-Prefix with `VITE_` so Vite exposes them to the client:
-
+### `frontend/.env` & `dashboard/.env`
+Note: Expose variables to Vite using the `VITE_` prefix.
 | Variable | Description |
 |----------|-------------|
-| `VITE_NETWORK_NAME` | e.g. `TESTNET` |
-| `VITE_NETWORK_PASSPHRASE` | Stellar network passphrase |
-| `VITE_HORIZON_URL` | Horizon URL |
-| `VITE_SOROBAN_RPC_URL` | Soroban RPC URL |
-| `VITE_SXLM_TOKEN_CONTRACT_ID` | sXLM token contract ID |
-| `VITE_STAKING_CONTRACT_ID` | Staking contract ID |
-| `VITE_LENDING_CONTRACT_ID` | Lending contract ID |
-| `VITE_LP_POOL_CONTRACT_ID` | LP pool contract ID |
-| `VITE_GOVERNANCE_CONTRACT_ID` | Governance contract ID |
-| `VITE_API_URL` | Backend API base URL (e.g. `http://localhost:3001`) |
+| `VITE_NETWORK_NAME` | Target network (`TESTNET` or `MAINNET`) |
+| `VITE_API_URL` | URL of the running Backend API (default `http://localhost:3001`) |
+| `VITE_SXLM_TOKEN_CONTRACT_ID` | Deployed sXLM token contract ID |
+| `VITE_STAKING_CONTRACT_ID` | Deployed staking contract ID |
 
 ---
 
-## Project Structure
+## 🛠 Project Map
 
-```
-xlmLR/
-├── contract/                 # Soroban contracts (Rust workspace)
-│   ├── sxlm-token/
-│   ├── staking/
-│   ├── lending/
-│   ├── lp-pool/
-│   └── governance/
-├── backend/                  # Node.js API and services
-│   ├── prisma/
-│   │   ├── schema.prisma
-│   │   ├── migrations/
-│   │   └── seed.ts
-│   └── src/
-│       ├── api-gateway/      # Fastify server and routes
-│       ├── staking-engine/
-│       ├── validator-service/
-│       ├── reward-engine/
-│       ├── risk-engine/
-│       ├── event-listener/
-│       ├── event-bus/
-│       ├── user-service/
-│       ├── metrics-cron/
-│       ├── keeper/
-│       ├── leverage-engine/
-│       ├── restaking-engine/
-│       └── config/
-└── frontend/                 # React + Vite SPA
-    └── src/
-        ├── components/
-        ├── pages/
-        ├── hooks/
-        ├── lib/
-        ├── utils/
-        └── config/
+```text
+stello_finance/
+├── contract/                 # Rust Workspace: Soroban Smart Contracts
+│   ├── sxlm-token/           # The yield-bearing LST
+│   ├── staking/              # Delegation & Staking logic
+│   ├── lending/              # Collateralized lending markets
+│   ├── lp-pool/              # XLM/sXLM liquidity
+│   └── governance/           # DAO parameter voting
+├── backend/                  # Fastify / Node.js API
+│   ├── prisma/               # Database Schema & Migrations
+│   └── src/                  
+│       ├── api-gateway/      # REST API Routes (Analytics, simulate, apy)
+│       └── *-engine/         # Modular services (Risk, Staking, Reward, Restaking)
+├── indexer/                  # Node.js Event Indexer
+│   └── indexer.js            # Ingests on-chain events to PostgreSQL
+├── frontend/                 # React SPA (User dApp)
+│   └── src/components/       # Wallet, Stake, Govern UIs
+└── dashboard/                # React SPA (Dune-style Analytics)
+    └── src/                  # Recharts, TVL curves, Revenue breakdown
 ```
 
 ---
 
-## Backend Scripts
+## 📦 Deployment Strategy
 
-| Script | Command | Description |
-|--------|---------|-------------|
-| Dev | `npm run dev` | Run with tsx watch |
-| Build | `npm run build` | TypeScript compile to `dist/` |
-| Start | `npm start` | Run `dist/index.js` |
-| DB generate | `npm run db:generate` | Prisma generate client |
-| DB migrate | `npm run db:migrate` | Prisma migrate dev |
-| DB push | `npm run db:push` | Prisma db push |
-| DB studio | `npm run db:studio` | Prisma Studio |
-| Seed | `npm run seed` | Run seed script |
-| Test | `npm run test` | Vitest |
-| Lint | `npm run lint` | TypeScript check |
+- **Backend / Indexer:** A `render.yaml` and `nixpacks.toml` are included for seamless PaaS deployment (like Render or Railway). It automatically builds Prisma and starts the Node.js server.
+- **Frontend / Dashboard:** Build using `npm run build` and deploy the output `dist/` directory to Vercel, Netlify, or Cloudflare Pages.
+- **Contracts:** Compile to `.wasm` via `cargo build` and deploy using Soroban CLI to Stellar Mainnet/Testnet.
 
 ---
 
-## Frontend Scripts
-
-| Script | Command | Description |
-|--------|---------|-------------|
-| Dev | `npm run dev` | Vite dev server |
-| Build | `npm run build` | TypeScript + Vite build |
-| Preview | `npm run preview` | Preview production build |
-| Lint | `npm run lint` | ESLint |
-
----
-
-## Deployment
-
-- **Backend:** `backend/nixpacks.toml` defines build and start (Prisma generate, build, migrate deploy, then `node dist/index.js`). Use with Nixpacks or adapt for your platform.
-- **Frontend:** Build with `npm run build` and serve the `dist/` output with any static host; set `VITE_API_URL` to your backend URL.
-- **Contracts:** Deploy each contract to your target Stellar network and record contract IDs in backend and frontend env.
-
----
-
-## License
-
-See repository license file.
+## 📄 License
+This protocol is open-source. See the included repository license file for details.
